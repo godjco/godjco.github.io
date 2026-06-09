@@ -5,30 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JH Park | Personal Website</title>
   <style>
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       color: #1f2933;
-      background: #f6f2ea;
+      background: #f7f3ea;
       line-height: 1.6;
     }
-
     header {
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(246, 242, 234, 0.94);
-      border-bottom: 1px solid #ded6c8;
-      backdrop-filter: blur(12px);
+      background: rgba(247, 243, 234, 0.95);
+      border-bottom: 1px solid #ddd4c7;
+      backdrop-filter: blur(10px);
     }
-
     nav {
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 14px 20px;
       display: flex;
@@ -36,27 +30,23 @@
       align-items: center;
       gap: 16px;
     }
-
     .brand {
-      font-weight: 800;
+      font-weight: 900;
       color: #244855;
     }
-
     .nav-links {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       font-size: 14px;
     }
-
     .nav-links a {
       color: #244855;
       text-decoration: none;
       font-weight: 700;
     }
-
     .hero {
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 72px 20px 44px;
       display: grid;
@@ -64,45 +54,37 @@
       gap: 40px;
       align-items: center;
     }
-
     .eyebrow {
       color: #e64833;
-      font-weight: 800;
-      letter-spacing: 0;
+      font-weight: 900;
       text-transform: uppercase;
       font-size: 13px;
     }
-
     h1 {
       margin: 10px 0 16px;
       font-size: clamp(40px, 7vw, 72px);
       line-height: 1.02;
       color: #244855;
     }
-
     h2 {
       margin: 0 0 18px;
       color: #244855;
       font-size: 30px;
     }
-
     h3 {
       margin: 0 0 8px;
       color: #244855;
     }
-
     .hero p {
       font-size: 18px;
       max-width: 620px;
     }
-
-    .hero-actions {
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 24px;
     }
-
     .button {
       display: inline-block;
       padding: 11px 16px;
@@ -111,36 +93,28 @@
       font-weight: 800;
       border: 2px solid #244855;
     }
-
-    .button.primary {
+    .primary {
       background: #244855;
       color: white;
     }
-
-    .button.secondary {
+    .secondary {
       color: #244855;
       background: transparent;
     }
-
-    .avatar-wrap {
-      display: grid;
-      place-items: center;
-    }
-
     .avatar {
       width: min(280px, 76vw);
       aspect-ratio: 1;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 62% 26%, #e64833 0 17%, transparent 18%),
+        radial-gradient(circle at 62% 25%, #e64833 0 17%, transparent 18%),
         radial-gradient(circle at 38% 40%, #fbe9d0 0 16%, transparent 17%),
         radial-gradient(circle at 44% 38%, #244855 0 38%, transparent 39%),
         linear-gradient(135deg, #90aead, #fbe9d0);
       border: 10px solid white;
       box-shadow: 0 22px 60px rgba(36, 72, 85, 0.22);
       position: relative;
+      margin: 0 auto;
     }
-
     .avatar::after {
       content: "JH";
       position: absolute;
@@ -151,25 +125,21 @@
       font-size: 72px;
       font-weight: 900;
     }
-
     section {
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 42px 20px;
     }
-
-    .section-band {
-      background: #ffffff;
+    .band {
+      background: white;
       border-top: 1px solid #e5ddd0;
       border-bottom: 1px solid #e5ddd0;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }
-
     .card {
       background: white;
       border: 1px solid #ddd4c7;
@@ -177,20 +147,17 @@
       padding: 20px;
       box-shadow: 0 10px 28px rgba(36, 72, 85, 0.08);
     }
-
-    .section-band .card {
+    .band .card {
       background: #f9f6f0;
     }
-
-    .tag-list {
+    .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       padding: 0;
       list-style: none;
     }
-
-    .tag-list li {
+    .tags li {
       padding: 7px 10px;
       border-radius: 999px;
       background: #e8eee9;
@@ -198,42 +165,25 @@
       font-weight: 700;
       font-size: 14px;
     }
-
     .timeline {
       display: grid;
       gap: 14px;
     }
-
     .timeline-item {
       border-left: 4px solid #e64833;
       padding-left: 14px;
     }
-
+    a { color: #e64833; }
     footer {
       padding: 28px 20px;
       text-align: center;
       background: #244855;
       color: white;
     }
-
-    a {
-      color: #e64833;
-    }
-
     @media (max-width: 760px) {
-      nav {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 48px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
+      nav { align-items: flex-start; flex-direction: column; }
+      .hero { grid-template-columns: 1fr; padding-top: 48px; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -253,40 +203,38 @@
   </header>
 
   <main>
-    <section class="hero" id="top">
+    <section class="hero">
       <div>
         <div class="eyebrow">Personal Website</div>
         <h1>Hi, I am JH Park.</h1>
         <p>
-          I am a student interested in programming, web development, and building useful
-          software projects. This page introduces my background, projects, skills, and contact information.
+          I am a Computer Science and Engineering student interested in programming,
+          web development, artificial intelligence, and building useful software projects.
         </p>
-        <div class="hero-actions">
+        <div class="actions">
           <a class="button primary" href="#projects">View Projects</a>
-          <a class="button secondary" href="#contact">Contact Me</a>
+          <a class="button secondary" href="assets/cv.pdf" target="_blank">Open CV</a>
         </div>
       </div>
-      <div class="avatar-wrap" aria-label="Profile avatar">
-        <div class="avatar" role="img" aria-label="Profile avatar with initials JH"></div>
-      </div>
+      <div class="avatar" role="img" aria-label="Profile avatar with initials JH"></div>
     </section>
 
-    <div class="section-band">
+    <div class="band">
       <section id="about">
         <h2>About Me</h2>
         <div class="grid">
           <div class="card">
             <h3>Introduction</h3>
             <p>
-              My name is JH Park. I am studying Computer Science and Engineering.
-              I enjoy learning how ideas become real products through code.
+              My name is JH Park. I enjoy learning how ideas become real products through code.
+              I am especially interested in practical software systems and problem solving.
             </p>
           </div>
           <div class="card">
             <h3>Interests</h3>
             <p>
-              I am interested in software engineering, artificial intelligence,
-              web services, and problem solving with clean, practical code.
+              My interests include software engineering, artificial intelligence,
+              web services, clean code, and collaborative development.
             </p>
           </div>
         </div>
@@ -313,7 +261,7 @@
       </div>
     </section>
 
-    <div class="section-band">
+    <div class="band">
       <section id="resume">
         <h2>CV / Resume</h2>
         <div class="grid">
@@ -324,7 +272,7 @@
           </div>
           <div class="card">
             <h3>Skills</h3>
-            <ul class="tag-list">
+            <ul class="tags">
               <li>C++</li>
               <li>Python</li>
               <li>Java</li>
@@ -332,6 +280,16 @@
               <li>CSS</li>
               <li>GitHub Pages</li>
             </ul>
+          </div>
+          <div class="card">
+            <h3>Experience</h3>
+            <p>OOP Course Project, web development practice, and personal coding projects.</p>
+          </div>
+          <div class="card">
+            <h3>Download</h3>
+            <p>
+              <a class="button primary" href="assets/cv.pdf" target="_blank">Download CV</a>
+            </p>
           </div>
         </div>
       </section>
@@ -355,7 +313,7 @@
       </div>
     </section>
 
-    <div class="section-band">
+    <div class="band">
       <section id="contact">
         <h2>Contact</h2>
         <div class="grid">
@@ -365,7 +323,7 @@
           </div>
           <div class="card">
             <h3>GitHub</h3>
-            <p><a href="https://github.com/pdh52796197-debug">github.com/pdh52796197-debug</a></p>
+            <p><a href="https://github.com/godjco">github.com/godjco</a></p>
           </div>
         </div>
       </section>
@@ -378,7 +336,7 @@
         <p>
           <strong>Prompt:</strong>
           Build a static personal website for GitHub Pages with About Me, Projects,
-          Contact, Resume, Courses, navigation, and an AI Usage section.
+          Contact, Resume, Courses, navigation, CV link, and an AI Usage section.
         </p>
       </div>
     </section>

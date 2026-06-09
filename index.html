@@ -98,3 +98,244 @@
       color: white;
     }
     .secondary {
+      color: #244855;
+      background: transparent;
+    }
+    .avatar {
+      width: min(280px, 76vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      background: #fbe9d0;
+      border: 10px solid white;
+      box-shadow: 0 22px 60px rgba(36, 72, 85, 0.22);
+      margin: 0 auto;
+    }
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 42px 20px;
+    }
+    .band {
+      background: white;
+      border-top: 1px solid #e5ddd0;
+      border-bottom: 1px solid #e5ddd0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #ddd4c7;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(36, 72, 85, 0.08);
+    }
+    .band .card {
+      background: #f9f6f0;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+    .tags li {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #e8eee9;
+      color: #244855;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+    .timeline-item {
+      border-left: 4px solid #e64833;
+      padding-left: 14px;
+    }
+    a { color: #e64833; }
+    footer {
+      padding: 28px 20px;
+      text-align: center;
+      background: #244855;
+      color: white;
+    }
+    @media (max-width: 760px) {
+      nav { align-items: flex-start; flex-direction: column; }
+      .hero { grid-template-columns: 1fr; padding-top: 48px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Main navigation">
+      <div class="brand">JH Park</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#courses">Courses</a>
+        <a href="#contact">Contact</a>
+        <a href="#ai-usage">AI Usage</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Personal Website</div>
+        <h1>Hi, I am JH Park.</h1>
+        <p>
+          I am a Computer Science and Engineering student interested in programming,
+          web development, artificial intelligence, and building useful software projects.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#projects">View Projects</a>
+          <a class="button secondary" href="assets/cv.pdf" target="_blank">Open CV</a>
+        </div>
+      </div>
+      <img class="avatar" src="assets/image.jpg" alt="Profile photo of JH Park" />
+    </section>
+
+    <div class="band">
+      <section id="about">
+        <h2>About Me</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Introduction</h3>
+            <p>
+              My name is JH Park. I enjoy learning how ideas become real products through code.
+              I am especially interested in practical software systems and problem solving.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Interests</h3>
+            <p>
+              My interests include software engineering, artificial intelligence,
+              web services, clean code, and collaborative development.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="projects">
+      <h2>Projects & Activities</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>OOP Course Project</h3>
+          <p>
+            Designed a C++ class structure using object-oriented programming concepts
+            such as encapsulation, inheritance, and modular design.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Web Development Study</h3>
+          <p>
+            Practiced HTML, CSS, and JavaScript by building responsive pages and
+            improving layouts for readability and accessibility.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div class="band">
+      <section id="resume">
+        <h2>CV / Resume</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Education</h3>
+            <p>Seoul National University</p>
+            <p>Major: Computer Science and Engineering</p>
+          </div>
+          <div class="card">
+            <h3>Skills</h3>
+            <ul class="tags">
+              <li>C++</li>
+              <li>Python</li>
+              <li>Java</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>GitHub Pages</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Experience</h3>
+            <p>OOP Course Project, web development practice, and personal coding projects.</p>
+          </div>
+          <div class="card">
+            <h3>Download</h3>
+            <p>
+              <a class="button primary" href="assets/cv.pdf" target="_blank">Download CV</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="courses">
+      <h2>Courses I Plan to Take</h2>
+      <div class="timeline">
+        <div class="card timeline-item">
+          <h3>Data Structures</h3>
+          <p>To strengthen my understanding of efficient data organization and algorithms.</p>
+        </div>
+        <div class="card timeline-item">
+          <h3>Artificial Intelligence</h3>
+          <p>To learn core AI concepts and apply them to practical software systems.</p>
+        </div>
+        <div class="card timeline-item">
+          <h3>Computer Networks</h3>
+          <p>To understand how modern web services communicate and scale.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="band">
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Email</h3>
+            <p><a href="mailto:godjco@snu.ac.kr">godjco@snu.ac.kr</a></p>
+          </div>
+          <div class="card">
+            <h3>GitHub</h3>
+            <p>
+              <a href="https://github.com/godjco" target="_blank" rel="noopener noreferrer">
+                https://github.com/godjco
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="ai-usage">
+      <h2>AI Usage</h2>
+      <div class="card">
+        <p><strong>Tool:</strong> Codex</p>
+        <p>
+          <strong>Prompt:</strong>
+          Build a static personal website for GitHub Pages with About Me, Projects,
+          Contact, Resume, Courses, navigation, CV link, and an AI Usage section.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 JH Park. Built for GitHub Pages.</p>
+  </footer>
+</body>
+</html>

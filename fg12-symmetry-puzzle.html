@@ -28,7 +28,7 @@ const puzzles={
  ruins:{title:'대칭 유적',subtitle:'세 조각을 붙여 선대칭인 도형을 만드세요.',type:'선대칭',flip:false,pieces:[{name:'첫 번째 조각',x:1,y:1,angle:2,cells:[[2,0],[1,1],[2,1],[0,2],[1,2],[2,2],[2,3]]},{name:'두 번째 조각',x:9,y:1,angle:6,cells:[[0,0],[0,1],[1,1],[0,2],[1,2],[2,2],[0,3],[1,3],[2,3],[3,3],[1,4],[2,4],[3,4],[4,4]]},{name:'세 번째 조각',x:6,y:10,angle:2,cells:[[2,0],[3,0],[4,0],[1,1],[2,1],[3,1],[4,1],[5,1],[0,2],[1,2],[2,2],[3,2],[4,2],[5,2],[6,2]]}]}
 };
 const palette={yes:{fill:'#ed7479',stroke:'#b54149',selected:'#792633'},dna:{fill:'#63b988',stroke:'#258552',selected:'#145a35'},ruins:{fill:'#7089ec',stroke:'#405ec1',selected:'#243c91'}};
-const $=id=>document.getElementById(id),board=$('board'),layer=$('pieces'),boardViewport=$('boardViewport');let current='yes',pieces=[],selected=0,drag=null,scrollFrame=0,fireTimer=null;const CLEAR_KEY='fg12-symmetry-clears-v1';let cleared={yes:false,dna:false,ruins:false};try{const saved=JSON.parse(localStorage.getItem(CLEAR_KEY)||'{}');for(const key of Object.keys(cleared))cleared[key]=saved[key]===true}catch{}
+const $=id=>document.getElementById(id),board=$('board'),layer=$('pieces'),boardViewport=$('boardViewport');let current='yes',pieces=[],selected=0,drag=null,scrollFrame=0,fireTimer=null;const CLEAR_KEY='fg12-symmetry-clears-v2';let cleared={yes:false,dna:false,ruins:false};try{const saved=JSON.parse(localStorage.getItem(CLEAR_KEY)||'{}');for(const key of Object.keys(cleared))cleared[key]=saved[key]===true}catch{}
 function msg(text='',kind=''){const el=$('message');el.textContent=text;el.className='message'+(kind?' '+kind:'')}
 function clonePieces(key){return puzzles[key].pieces.map((p,i)=>({id:i,name:p.name,x:p.x,y:p.y,cells:p.cells.map(c=>[...c]),angle:p.angle??0,flipped:false}))}
 function cross(a,b){return a[0]*b[1]-a[1]*b[0]}function sub(a,b){return [a[0]-b[0],a[1]-b[1]]}
@@ -79,7 +79,21 @@ function unionCoverage(subject,groups){
  for(let a=0;a<groups.length;a++)for(let b=a+1;b<groups.length;b++)for(const pa of cuts[a])for(const pb of groups[b]){const both=clip(pa,pb);if(both.length<3||Math.abs(signedArea(both))<=EPS)continue;total-=Math.abs(signedArea(both));for(let c=b+1;c<groups.length;c++)for(const pc of groups[c]){const triple=clip(both,pc);if(triple.length>=3)total+=Math.abs(signedArea(triple))}}
  return total;
 }
-function checkSymmetry(){if(!connected()){msg('먼저 세 조각을 변끼리 붙여 주세요.','error');return}const groups=pieces.map(p=>shifted(geometry(p).polys,p.x,p.y)),polys=groups.flat(),points=polys.flat(),xs=points.map(p=>p[0]),ys=points.map(p=>p[1]),lx=Math.min(...xs),rx=Math.max(...xs),ty=Math.min(...ys),by=Math.max(...ys);const symmetric=fn=>polys.every(poly=>{const reflected=poly.map(fn);const covered=unionCoverage(reflected,groups);return Math.abs(covered-1)<1e-5});let ok=false;if(current==='yes')ok=symmetric(([x,y])=>[lx+rx-x,y]);else if(current==='dna')ok=symmetric(([x,y])=>[lx+rx-x,ty+by-y]);else{ok=symmetric(([x,y])=>[lx+rx-x,y])||symmetric(([x,y])=>[x,ty+by-y]);if(Math.abs((rx-lx)-(by-ty))<1e-5)ok=ok||symmetric(([x,y])=>[lx+y-ty,ty+x-lx])||symmetric(([x,y])=>[lx+by-y,ty+rx-x])}if(ok){celebrate();msg('CLEAR!','success')}else msg('아직 대칭이 아니에요.','error')}
+const solutionPatterns={
+ yes:['#######','#.#.#.#','##...##','.#####.','##...##'],
+ dna:['..#...','####..','.#.##.','.##.#.','..####','...#..'],
+ ruins:['.....#.....','....###....','...#####...','..#######..','.#########.','###########']
+};
+function shapeKey(points){const minX=Math.min(...points.map(p=>p[0])),minY=Math.min(...points.map(p=>p[1])),coords=[];for(const [x,y] of points){const dx=x-minX,dy=y-minY,ix=Math.round(dx),iy=Math.round(dy);if(Math.abs(dx-ix)>1e-5||Math.abs(dy-iy)>1e-5)return null;coords.push(ix+','+iy)}return coords.sort().join(';')}
+function solutionKeys(rows){const base=[];rows.forEach((row,y)=>[...row].forEach((c,x)=>{if(c==='#')base.push([x,y])}));const keys=new Set();for(let flip=0;flip<2;flip++)for(let turns=0;turns<4;turns++){let shape=base.map(([x,y])=>[flip?-x:x,y]);for(let i=0;i<turns;i++)shape=shape.map(([x,y])=>[-y,x]);keys.add(shapeKey(shape))}return keys}
+const answerKeys=Object.fromEntries(Object.entries(solutionPatterns).map(([id,rows])=>[id,solutionKeys(rows)]));
+function checkSymmetry(){
+ const groups=pieces.map(p=>shifted(geometry(p).polys,p.x,p.y));
+ for(let i=0;i<groups.length;i++)for(let j=i+1;j<groups.length;j++)if(groups[i].some(a=>groups[j].some(b=>overlaps(a,b)))){msg('조각이 겹쳐 있어요. 겹치지 않게 붙여 주세요.','error');return}
+ if(!connected()){msg('먼저 세 조각을 변끼리 붙여 주세요.','error');return}
+ const centers=groups.flat().map(poly=>[poly.reduce((n,v)=>n+v[0],0)/poly.length,poly.reduce((n,v)=>n+v[1],0)/poly.length]);
+ const key=shapeKey(centers);if(key&&answerKeys[current].has(key)){celebrate();msg('CLEAR!','success')}else msg('아직 정답 모양이 아니에요.','error');
+}
 document.querySelectorAll('.tab').forEach(button=>button.addEventListener('click',()=>setPuzzle(button.dataset.puzzle)));$('flip').addEventListener('click',()=>transform('flip'));$('reset').addEventListener('click',()=>setPuzzle(current));$('check').addEventListener('click',checkSymmetry);document.addEventListener('keydown',e=>{if(e.target instanceof HTMLButtonElement)return;if(e.key.toLowerCase()==='r'){e.preventDefault();transform('right')}if(e.key.toLowerCase()==='f'&&puzzles[current].flip){e.preventDefault();transform('flip')}});setPuzzle('yes');
 
 </script>
